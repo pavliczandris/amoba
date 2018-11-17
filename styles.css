@@ -1,0 +1,23 @@
+body {
+    background: #BDBF8F;
+
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+div {
+    cursor: default;
+}
+
+.canvas-container {
+    display: flex;
+    position: relative;
+    justify-content: center;
+}
+
+canvas {
+    border:3px solid #654321;
+    background: #DFD59F;
+}
