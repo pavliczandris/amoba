@@ -8,6 +8,9 @@ div {
 
 .container {
     padding-top: 3rem;
+    width: 70%;
+    position: relative;
+    left: 15%;
 }
 
 .header-container {
@@ -27,6 +30,7 @@ div {
     display: flex;
     position: relative;
     justify-content: center;
+    margin: 0 1rem;
 }
 
 canvas {
