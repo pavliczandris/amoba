@@ -6,10 +6,21 @@
 </head>
 
 <body>
-    <h1>Amőba by Fábritz</h1>
-    <h2>Player: <span id="player"></span></h2>
-    <div class="canvas-container">
-        <canvas id="canvas" width="800" height="800"></canvas>
+    <div class="side-cover left-side"></div>
+    <div class="side-cover right-side"></div>
+
+    <div class="container">
+        <div id="header-container" class="header-container">
+            <h1 class="title">Amőba by Fábritz</h1>
+            <h2><span id="header-text">Player: </span><span id="player"></span></h2>
+        </div>
+        <div class="canvas-container">
+            <canvas id="canvas" width="520" height="520"></canvas>
+        </div>
+        <div class="button-container">
+            <button id="new-game" onclick="resetGame()">New Game</button>
+            <button id="randomize-colors" onclick="randomizeColors()">Randomize Colors</button>
+        </div>
     </div>
 
     <script src="amoba.js"></script>

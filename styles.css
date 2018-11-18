@@ -1,14 +1,26 @@
-body {
-    background: #BDBF8F;
-
-}
-
 h1, h2 {
     text-align: center;
 }
 
 div {
     cursor: default;
+}
+
+.container {
+    padding-top: 3rem;
+}
+
+.header-container {
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 1rem;
+}
+
+.title {
+    padding-bottom: 2rem;
 }
 
 .canvas-container {
@@ -18,6 +30,21 @@ div {
 }
 
 canvas {
-    border:3px solid #654321;
-    background: #DFD59F;
+    border:3px solid;
+}
+
+.side-cover {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 15%;
+    outline: 6px solid;
+}
+
+.left-side {
+    left: 0;
+}
+
+.right-side {
+    right: 0;
 }

@@ -1,5 +1,10 @@
-var canvas = document.getElementById('canvas'),
+var body = document.getElementsByTagName('body')[0],
+    sides = document.getElementsByClassName('side-cover'),
+    canvas = document.getElementById('canvas'),
     playerSpan = document.getElementById('player'),
+    headerSpan = document.getElementById('header-text'),
+    headerContainer = document.getElementById('header-container'),
+
     ctx = canvas.getContext("2d"),
     tileWidth = 40,
     tilePaddingO = 8,
@@ -10,23 +15,39 @@ var canvas = document.getElementById('canvas'),
     numTiles = canvas.width * canvas.height / tileWidth,
     startingTile, endTile, player, turn, tiles,
     players = Object.freeze({ default: "", X: "X", O: "O" }),
-    colors = Object.freeze({ brown: "#654321", red: "#8B0000", blue: "#000080" });
+    colors = {
+        headerColor: "black",
+        bodyColor: "#BDBF8F",
+        sideBackground: "skyblue",
+        canvasBgColor: "#DFD59F",
+        borderColor: "#654321",
+        xColor: "#8B0000",
+        oColor: "#000080"
+    };
 ctx.lineWidth = 1.5;
 
 resetGame();
-drawGrid();
+redrawPage();
 
 function resetGame() {
     setPlayer(players.X);
     turn = 0;
+    headerSpan.innerText = 'Player: ';
+    playerSpan.style.visibility = 'visible';
 
     tiles = new Array(canvas.width / tileWidth);
     for (let i = 0; i < tiles.length; i++) { tiles[i] = new Array(canvas.height / tileWidth).fill(players.default); }
     canvas.onclick = function (e) { put((e.offsetX / tileWidth) | 0, (e.offsetY / tileWidth) | 0); }
+    resetCanvas();
+}
+
+function resetCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGrid();
 }
 
 function drawGrid() {
-    ctx.fillStyle = colors.brown;
+    ctx.fillStyle = colors.borderColor;
     for (let i = 1; i < tiles.length; i++) {
         ctx.fillRect(i * tileWidth, 0, 1.5, canvas.height);
         ctx.fillRect(0, i * tileWidth, canvas.width, 1.5);
@@ -52,7 +73,7 @@ function togglePlayer() { player === players.X ? setPlayer(players.O) : setPlaye
 
 function drawX(x, y) {
     isBusy = true;
-    ctx.strokeStyle = colors.red;
+    ctx.strokeStyle = colors.xColor;
     (function draw() {
         ctx.clearRect(x + 2, y + 2, tileWidth - 2, tileWidth - 2);
         ctx.globalAlpha = alpha;
@@ -75,7 +96,7 @@ function drawX(x, y) {
 
 function drawO(x, y) {
     isBusy = true;
-    ctx.strokeStyle = colors.blue;
+    ctx.strokeStyle = colors.oColor;
     (function draw() {
         ctx.clearRect(x + 2, y + 2, tileWidth - 2, tileWidth - 2);
         ctx.globalAlpha = alpha;
@@ -134,7 +155,14 @@ function isOut(x, y) {
 
 function endGame(winner) {
     canvas.onclick = null;
-    if (winner) { setTimeout(() => showWinnerTiles(winner), 300); }
+    if (winner) {
+        setTimeout(() => showWinnerTiles(winner), 300);
+        headerSpan.innerText = 'Winner: ' + winner;
+    }
+    else {
+        headerSpan.innerText = 'Draw!';
+        playerSpan.style.visibility = 'hidden';
+    }
 }
 
 function showWinnerTiles() {
@@ -145,7 +173,7 @@ function showWinnerTiles() {
 }
 
 function colorTile(x, y) {
-    ctx.fillStyle = player === players.X ? colors.red : colors.blue;
+    ctx.fillStyle = player === players.X ? colors.xColor : colors.oColor;
     let a = 0;
     (function draw() {
         ctx.globalAlpha = a;
@@ -157,4 +185,32 @@ function colorTile(x, y) {
             return;
         }
     })();
+}
+
+
+function randomizeColors() {
+    Object.keys(colors).forEach(key => colors[key] = getRandomColor());
+    redrawPage();
+}
+
+function redrawPage() {
+    if (isBusy) return;
+    headerContainer.style.color = colors.headerColor;
+    body.style.background = colors.bodyColor;
+    sides[0].style.background = colors.sideBackground;
+    sides[1].style.background = colors.sideBackground;
+    sides[0].style.outlineColor = colors.borderColor;
+    sides[1].style.outlineColor = colors.borderColor;
+    canvas.style.background = colors.bodyColor;
+    canvas.style.borderColor = colors.borderColor;
+    drawGrid();
+}
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }
