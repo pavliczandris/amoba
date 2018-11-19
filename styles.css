@@ -19,6 +19,8 @@ div {
 .button-container {
     display: flex;
     justify-content: space-around;
+    align-self: center;
+    width: 520px;
     padding-top: 1rem;
 }
 
@@ -26,11 +28,17 @@ div {
     padding-bottom: 2rem;
 }
 
-.canvas-container {
+.game-container {
     display: flex;
+    flex-direction: column;
     position: relative;
     justify-content: center;
     margin: 0 1rem;
+}
+
+.canvas-container {
+    display: flex;
+    justify-content: center;
 }
 
 canvas {
