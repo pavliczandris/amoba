@@ -157,7 +157,7 @@ function endGame(winner) {
     canvas.onclick = null;
     if (winner) {
         setTimeout(() => showWinnerTiles(winner), 300);
-        headerSpan.innerText = 'Winner: ' + winner;
+        headerSpan.innerText = 'Winner: ';
     }
     else {
         headerSpan.innerText = 'Draw!';
